@@ -1,0 +1,102 @@
+.container-header{
+	margin-top: 20px;
+}
+.text-title {
+	color: rgb(128, 128, 128);
+	border-color: red;
+	border-top: 0;
+	border-left: 0;
+    border-right: 0;
+    font-size: 38px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.text-title-section {
+	color: #454545;
+	border-color: red;
+	border-top: 0;
+	border-left: 0;
+    border-right: 0;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.input-requerido-label::after {
+    content: " *"; 
+    color: red; 
+}
+
+.col-form-label {
+	font-size: 12px;
+	font-weight: 500;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 0.5;
+}
+
+.form-control-file{
+	font-size: 13px;
+}
+
+.form-group {
+     margin-bottom: 1px; 
+}
+
+ /* your CSS goes here*/
+ 
+.icon-box i { margin:25px; margin: 25px; color:rgb(255, 128, 128);border: 1px solid rgb(255, 128, 128); border-radius: 50px;}
+.i-large-box{ width:100px; height:100px; line-height:98px; text-align:center; font-size:40px}
+.i-medium-box{ width:80px; height:80px; line-height:80px; text-align:center; font-size:30px;}
+.i-small-box{ width:60px; height:60px; line-height:60px; text-align:center; font-size:22px}
+.i-extra-small-box{ width:40px; height:40px; line-height:40px; text-align:center; font-size:15px}
+.i-plain { color:#737373; background-color: transparent !important;}
+.i-plain:hover { color:#fff; background-color: #737373!important; -webkit-transform: scale(1.2); -moz-transform: scale(1.2); -o-transform: scale(1.2); -ms-transform: scale(1.2); transform: scale(1.2);}
+.i-rounded  { border-radius: 3px; background-color: #000; color:#fff; border:1px solid rgba(0,0,0,0.15);} 
+ 
+.container{
+    
+    /*margin-top:200px;*/
+} 
+ 
+ 
+.i-plain:hover {
+    color: #fff;
+    background-color: rgb(101, 172, 83)!important;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+ .centered-icon {
+    font-size: 4em; /* Tamaño de icono */
+    margin-top: 20px; /* Espacio superior para centrar verticalmente */
+    margin-bottom: 20px; /* Espacio inferior para centrar verticalmente */
+    line-height: 0;
+    line-height: inherit!important;
+}
+
+.icon-item {
+    margin: 0 10px; /* Espacio entre los iconos */
+    display: inline-block;
+}
+
+p{
+    margin-top: 0;
+    margin-bottom: 0rem!important;
+}
+
+.navbar {
+    background-color: #d94d42;
+    background: rgba(240,147,114,1);
+    background: -moz-linear-gradient(left, rgba(240,147,114,1) 0%, rgba(240,148,114,1) 0%, rgba(229,112,90,1) 50%, rgba(217,76,66,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(240,147,114,1)), color-stop(0%, rgba(240,148,114,1)), color-stop(50%, rgba(229,112,90,1)), color-stop(100%, rgba(217,76,66,1)));
+    background: -webkit-linear-gradient(left, rgba(240,147,114,1) 0%, rgba(240,148,114,1) 0%, rgba(229,112,90,1) 50%, rgba(217,76,66,1) 100%);
+    background: -o-linear-gradient(left, rgba(240,147,114,1) 0%, rgba(240,148,114,1) 0%, rgba(229,112,90,1) 50%, rgba(217,76,66,1) 100%);
+    background: -ms-linear-gradient(left, rgba(240,147,114,1) 0%, rgba(240,148,114,1) 0%, rgba(229,112,90,1) 50%, rgba(217,76,66,1) 100%);
+    background: linear-gradient(to right, rgba(240,147,114,1) 0%, rgba(240,148,114,1) 0%, rgba(229,112,90,1) 50%, rgba(217,76,66,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09372', endColorstr='#d94c42', GradientType=1 );
+    color: #fff;
+    border-bottom: 0 solid transparent;
+}

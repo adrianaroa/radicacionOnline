@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}">Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+</head>
+<body>
+	<div class="container container-head align-middle">
+		<div class="row">
+			<div class="col-sm-2 d-inline-block">
+				<img th:src="@{/itindro/logoitindro.png}" id="imagen" class="img-fluid w-80"/>
+			</div>
+			<div class="col-sm-8 d-inline-block text-center align-middle">
+				<h3 th:text="${titulo}" class="text-title"></h3>
+			</div>
+			<div class="col-sm-2 d-inline-block">
+				<img th:src="@{/itindro/logoitindro.png}" id="imagen" class="img-fluid w-80"/>
+			</div>
+		</div>
+		
+	</div>
+	
+
+	<div class="container container-body">
+		<form  th:object="${radicacioncomunicacion}"  >
+			<div class="card my-3" >
+			  <div class="card-header py-1 align-middle">
+			    <h5 class="text-title-section">Información Radicación</h5>
+			  </div>
+			  <div class="card-body">
+				  <div class="row">
+					  <label class="" >Señor usuario, la solicitud <span th:text="${session.radicacioncomunicacion.rad_asunto}"></span> se ha procesado con éxito.</label>
+
+<!--					//  Número solicitud 	
+-->
+
+				  </div>
+			  </div>
+			</div>
+		</form>
+
+
+<!--		<div th:object="${cliente}" th:remove="tag">
+			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+				<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
+			</ul>
+		</div>
+		<form th:action="@{/form}" th:object="${cliente}" method="post">
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">Nombre</label>
+				<div class="col-sm-6">
+					<input type="text" th:field="*{nombre}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">Apellido</label>
+				<div class="col-sm-6">
+					<input type="text" th:field="*{apellido}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">Email</label>
+				<div class="col-sm-6">
+					<input type="text" th:field="*{email}" class="form-control"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">Fecha</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" th:field="*{createAt}"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('createAt')}" th:errors="*{createAt}"></small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-sm-6">
+					<input type="submit" value="Crear Cliente" class="btn btn-primary" />
+				</div>
+			</div>
+
+		</form>-->
+	</div>
+</body>
+</html>
+ <script>
+        const fileInput = document.getElementById('files');
+        const fileList = document.getElementById('fileList');
+
+        fileInput.addEventListener('change', function() {
+            fileList.innerHTML = ''; // Limpia la lista de archivos cada vez que se selecciona un archivo nuevo
+            const files = fileInput.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileName = file.name;
+                const fileSize = (file.size / 1024).toFixed(2) + ' KB'; // Tamaño en KB
+                const listItem = document.createElement('div');
+                listItem.textContent = `Nombre del archivo: ${fileName}, Tamaño: ${fileSize}`;
+                fileList.appendChild(listItem);
+            }
+        });
+        
+    function onchageDepartamento(value){
+    fetch("/municipios/" + value)
+        .then(function(response) {
+            if (response.ok) {
+                return response.text(); // Puedes usar response.json() si esperas un JSON en lugar de texto
+            } else {
+                throw new Error("Error en la solicitud.");
+            }
+        })
+    	.then(data => {
+       		const datos = JSON.parse(data);
+			console.log(typeof data);
+			const select = document.getElementById('rad_municipio');
+			select.innerHTML = '';
+
+			  datos.forEach(dato => {
+		            const option = document.createElement('option');
+		            option.value = dato.municipio_id; // Puedes aplicar trim para eliminar espacios en blanco adicionales
+		            option.text = dato.municipio_nombre;
+		            select.appendChild(option);
+		        });
+
+        })
+        .catch(function(error) {
+            // Manejar errores
+            console.error("Error: " + error);
+        });
+		}
+		
+		
+		
+</script>

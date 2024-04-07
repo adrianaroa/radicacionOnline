@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}">Insert title here</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+<!-- Agrega estos enlaces en tu archivo HTML -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+
+
+</head>
+<body>
+	<div th:replace="layout/layout :: header"></div>
+	<div class="container container-body">
+		<form id="formRadicacion" th:object="${radicacioncomunicacion}"  method="post" enctype="multipart/form-data">
+		  	<input type="hidden"  name="rad_tipo" id="rad_tipo" value='1' /> 
+			<div class="card my-3" >
+			  <div class="card-header py-1 align-middle">
+			    <h5 class="text-title-section">Información del Remitente</h5>
+			  </div>
+			  <div class="card-body">
+				  	<div class="row">
+						<div class="form-group col-sm-6  d-inline-block">
+							<label class="col-form-label input-requerido-label">Tipo de Identificación</label>
+						     <select  class="form-control form-control form-control-sm input-requerido-label" 
+					     			th:field="*{rad_tipoidentificacion}" id="rad_tipoidentificacion" name="rad_tipoidentificacion" 
+					     			onchange="onchageTipoIdentificacion(this.value);">
+							      <option value=""></option>
+							      <option th:each="tipo_identificacion: ${TipoDocumento}" th:value="${tipo_identificacion.tido_id}" th:text="${tipo_identificacion.tido_descripcion}"  th:data-tipo="${tipo_identificacion.tido_radonline}"></option>
+						    </select>
+						    <small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_tipoidentificacion')}" th:errors="*{rad_tipoidentificacion}"></small>
+					  	</div>
+		  				<div class="form-group col-sm-6  d-inline-block">
+							<label class="col-form-label input-requerido-label">Número de Identificación</label>
+							<input type="text" class="form-control form-control-sm"	
+								th:field="*{rad_identificacion}" name="rad_identificacion" id="rad_identificacion"
+								maxlength="15" /> 
+		  					<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_identificacion')}" th:errors="*{rad_identificacion}"></small>
+		  				</div>
+  					</div>
+  					<div class="row">
+						<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Nombre / Razón Social</label>
+							<input type="text" class="form-control form-control-sm"	
+									th:field="*{rad_nombres}"  name="rad_nombres" id="rad_nombres" 
+									maxlength="50" /> 
+							<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_nombres')}" th:errors="*{rad_nombres}"></small>
+					  	</div>
+					  	
+					  	 <div id="personaNatural" class="col-sm-8" style="padding: 0px;">
+			  				<div class="form-group col-sm-6  d-inline-block">
+								<label class="col-form-label input-requerido-label">Primer Apellido</label>
+								<input type="text" class="form-control form-control-sm"	
+									th:field="*{rad_primerapellido}"  
+									name="rad_primerapellido" id="rad_primerapellido" 
+									maxlength="50"/> 
+								<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_primerapellido')}" th:errors="*{rad_primerapellido}"></small>
+							</div>
+			  				<div class="form-group col-sm-5  d-inline-block">
+								<label class="col-form-label input-requerido-label">Segundo Apellido</label>
+								<input type="text" class="form-control form-control-sm"	
+										th:field="*{rad_segundoapellido}"  
+										name="rad_segundoapellido" id="rad_segundoapellido"
+										maxlength="50" /> 
+					 			<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_segundoapellido')}" th:errors="*{rad_segundoapellido}"></small>
+							</div>  	
+						</div>		
+				  	 	<div id="personaJuridica" class="col-sm-8" style="display: none; padding: 0px;">
+							<div class="form-group col-sm-6  d-inline-block">
+								<label class="col-form-label input-requerido-label">Nombre de quién radica</label>
+								<input type="text" class="form-control form-control-sm"	
+									th:field="*{rad_funcionario}"  
+									name="rad_funcionario" id="rad_funcionario" 
+									maxlength="100" /> 
+								<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_funcionario')}" th:errors="*{rad_funcionario}"></small>
+							</div>
+			  				<div class="form-group col-sm-5  d-inline-block">
+								<label class="col-form-label input-requerido-label">Cargo de quién radica</label>
+								<input type="text" class="form-control form-control-sm"	
+										th:field="*{rad_funcionariocargo}"  
+										name="rad_funcionariocargo" id="rad_funcionariocargo" 
+										maxlength="100" /> 
+					 			<small	class="form-text text-danger" th:if="${#fields.hasErrors('rad_funcionariocargo')}" th:errors="*{rad_funcionariocargo}"></small>
+							</div>  
+						</div>
+									
+					</div>
+					  	
+  					<div class="row">
+  						<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Departamento</label>
+						     <select  class="form-control form-control form-control-sm input-requerido-label"
+						     			 id="rad_departamento" name="rad_departamento" onchange="onchageDepartamento(this.value);">
+							      <option value = 0></option>
+							      <option th:each="departamento: ${Departamento}" th:value="${departamento.departamento_codigo}" th:text="${departamento.departamento_nombre}"></td>
+						    </select>
+					  	</div>
+					  	<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Ciudad</label>
+						     <select  class="form-control form-control form-control-sm input-requerido-label" 
+						    	  th:field="*{rad_municipio}" id="rad_municipio" name="rad_municipio">
+						    </select>
+						    <small class="form-text text-danger" th:if="${#fields.hasErrors('rad_municipio')}" th:errors="*{rad_municipio}"></small>
+					  	</div>
+						<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Dirección</label>
+							<input type="text"  class="form-control form-control-sm input-requerido-label"	
+									th:field="*{rad_direccion}" 
+									name="rad_direccion" id="rad_direccion" 
+									maxlength="200"/> 
+				  			<small class="form-text text-danger" th:if="${#fields.hasErrors('rad_direccion')}" th:errors="*{rad_direccion}"></small>
+					  	</div>
+  					</div>
+  					<div class="row">
+		  				<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Barrio</label>
+							<input type="text" class="form-control form-control-sm input-requerido-label"	
+							 		th:field="*{rad_barrio}"  
+							 		name="rad_barrio" id="rad_barrio" 
+							 		maxlength="50"/> 
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('rad_barrio')}" th:errors="*{rad_barrio}"></small>
+						</div>
+						<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Teléfono</label>
+							<input type="text" class="form-control form-control-sm input-requerido-label"	
+									th:field="*{rad_telefono}"  
+									name="rad_telefono" id="rad_telefono"
+									maxlength="10" /> 
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('rad_barrio')}" th:errors="*{rad_barrio}"></small>
+					  	</div>
+		  				<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Correo electronico</label>
+							<input type="text" class="form-control form-control-sm input-requerido-label"
+									th:field="*{rad_correo}" 
+									name="rad_correo" id="rad_correo"
+									maxlength="50" /> 
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('rad_correo')}" th:errors="*{rad_correo}"></small>
+						</div>
+					</div>
+				    <div class="row">
+			  				<div class="form-group col-sm-4  d-inline-block">
+							<label class="col-form-label input-requerido-label">Confirmar correo electronico</label>
+							<input type="text"  name="rad_correo_confirmacion" id="rad_correo_confirmacion" class="form-control form-control-sm input-requerido-label"/> 
+						</div>  					
+					</div>
+			  </div>
+			</div>
+			<div class="card my-2" >
+			  <div class="card-header py-1">
+			    <h5 class="text-title-section">Resumen de la Comunicación</h5>
+			  </div>
+			  <div class="card-body">
+				 <div class="row">
+					<div class="form-group col-sm-4  d-inline-block">
+						<label class="col-form-label input-requerido-label">Tipo de Comunicación</label>
+ 							<select  class="form-control form-control form-control-sm input-requerido-label" 
+					     			th:field="*{rad_tiposolicitud}" id="rad_tiposolicitud" name="rad_tiposolicitud" >
+							      <option value=""></option>
+							      <option th:each="tiposolicitud: ${TipoSolicitud}" 
+							      th:value="${tiposolicitud.id}" 
+							      th:text="${tiposolicitud.nombre}"></option>
+						    </select>
+					 </div>
+				  </div>
+				  <div class="row">
+						<div class="form-group  col-sm-12  d-inline-block">
+							<label class="col-form-label input-requerido-label">Asunto</label>
+							<input type="text" th:field="*{rad_asunto}" 
+								name="numero_identificacion" id="primernombre" 
+								maxlength="50" class="form-control form-control-sm"	/> 
+						 	<small class="form-text text-danger" th:if="${#fields.hasErrors('rad_asunto')}" th:errors="*{rad_asunto}"></small>
+						</div>
+					</div>
+  					<div class="row">
+						<div class="form-group col-sm-6  d-inline-block">
+							<label class="col-form-label input-requerido-label">Resumen</label>
+					  		<textarea class="form-control" th:field="*{rad_resumen}"
+					  		maxlength="100"></textarea>
+					  	</div>
+						<div class="form-group col-sm-6  d-inline-block">
+							<label class="col-form-label input-requerido-label">Adjuntar archivo</label>
+            				<input type="file"  id="files" name="files" accept=".pdf, .doc, .docx" multiple="multiple">
+					      	<div id="fileList"></div>
+
+					  	</div>
+					</div>
+			  </div>
+			</div>
+			<button type="submit" class="btn-sm btn-primary">Enviar</button>
+		</form>
+	</div>
+</body>
+</html>
+ <script>
+var envioForm = 1;
+const fileInput = document.getElementById('files');
+const fileList = document.getElementById('fileList');
+
+fileInput.addEventListener('change', function() {
+    fileList.innerHTML = ''; 
+    const files = fileInput.files;
+    let fileAllSize = 0;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const fileName = file.name;
+        const fileSize = (file.size / 1024).toFixed(2) + ' KB'; // Tamaño en KB
+        fileAllSize += parseInt((file.size / 1024).toFixed(2));
+        const listItem = document.createElement('div');
+        listItem.textContent = `Nombre del archivo: ${fileName}, Tamaño: ${fileSize}`;
+        fileList.appendChild(listItem);
+    }
+    
+    if (fileAllSize >  10240 ) {
+		fileInput.value = null;
+	    fileList.innerHTML = ''; 
+        const listItem = document.createElement('div');
+        listItem.textContent = `Sin archivos seleccionados`;
+        fileList.appendChild(listItem);
+        mostrarMensaje('Ocurrió un error al procesar', "El tamaño del archivo supera el limite permitido", 'error');
+	}
+	
+});
+
+
+
+function onchageTipoIdentificacion(value){
+ 	var selectElement = document.getElementById('rad_tipoidentificacion');
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+    var tipoIdentificacionInfo = document.getElementById('tipoIdentificacionInfo');
+    var tipo = selectedOption.getAttribute('data-tipo');
+    if (tipo == 2) {
+        document.getElementById('personaJuridica').style.display = ''
+        document.getElementById('personaNatural').style.display = 'none'
+	}
+	else {
+        document.getElementById('personaJuridica').style.display = 'none'
+        document.getElementById('personaNatural').style.display = ''
+	}
+	
+}
+        
+function onchageDepartamento(value){
+	fetch("/municipios/" + value)
+	    .then(function(response) {
+	        if (response.ok) {
+	            return response.text(); 
+	        } else {
+	            throw new Error("Error en la solicitud.");
+	        }
+	    })
+		.then(data => {
+	   		const datos = JSON.parse(data);
+			console.log(typeof data);
+			const select = document.getElementById('rad_municipio');
+			select.innerHTML = '';
+	
+			  datos.forEach(dato => {
+		            const option = document.createElement('option');
+		            option.value = dato.municipio_id; 
+		            option.text = dato.municipio_nombre;
+		            select.appendChild(option);
+		        });
+	
+	    })
+	    .catch(function(error) {
+	        console.error("Error: " + error);
+	    });
+}
+		
+document.getElementById("formRadicacion").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+	if (envioForm == 1) {
+        envioForm = 0;
+
+	    fetch("/solicitudRadicacion", {
+	        method: "POST", 
+	        body: new FormData(this) 
+	    })
+		.then(response => {
+		    if (response.ok) {
+		         mostrarMensaje('Registro procesado', '<span>registro procesado con éxito</span>', 'success');
+		    } else {
+		        response.text().then(erroresJson => {
+		            console.error("Errores de validación:", erroresJson);
+		            let errores = JSON.parse(erroresJson);
+		            let descripcionErrores = "";
+		            errores.forEach(error => {
+						descripcionErrores += error.defaultMessage + "<br>";
+	                console.error("Error:", error.defaultMessage);
+		            });
+		            mostrarMensaje('Ocurrió un error al procesar', descripcionErrores, 'error');
+		         });
+		    }
+	        envioForm = 1;
+
+		})
+	    .catch(error => {
+	        envioForm = 1;
+	        console.error("Error al enviar la solicitud:", error);
+	    });
+    }
+});				
+				
+function mostrarMensaje(title, html, icon){
+	Swal.fire({
+	    title: title,
+	    html: html,
+	    icon: icon,
+	    confirmButtonText: 'Aceptar'
+	}).then((result) => {
+	    if (result.isConfirmed) {
+	        console.error("Error:", error.defaultMessage);
+	    }
+	});
+}
+
+</script>

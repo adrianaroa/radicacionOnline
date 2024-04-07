@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}">Insert title here</title>
+<link rel="stylesheet" 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-static-top">
+			<div data-toggle="offcanvas" role="button">
+			<span class="sr-only">Toggle navigation</span>
+			<div class="col-sm-12 d-inline-block">
+				<img th:src="@{/images/pgda.png}" id="imagen" class="img-fluid w-100"/>
+			</div>
+		</nav>
+	<div class="container container-header ">
+		<div class="row" style="margin-top:10px">
+			<div class="col-sm-2 d-inline-block">
+				<img th:src="@{/images/logo.png}" id="imagen" class="img-fluid w-80"/>
+			</div>
+			<div class="col-sm-8 d-inline-block text-center align-middle">
+				<h3 th:text="${titulo}" class="text-title"></h3>
+			</div>
+			<div class="col-sm-2 d-inline-block">
+				<img th:src="@{/images/logoitindro.png}" id="imagen" class="img-fluid w-80"/>
+			</div>
+		</div>
+		
+	</div>
+	    <!-- Agrega cualquier otro contenido de encabezado que necesites -->
+	</header>
+</body>
+</html>
